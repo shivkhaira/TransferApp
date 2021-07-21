@@ -6,6 +6,8 @@ import { selectUser } from "../../features/user/userSlice";
 
 import { fileUpload } from "../../config/storeData";
 
+import { Helmet } from "react-helmet";
+
 import "./Content.css";
 
 const Content = () => {
@@ -37,6 +39,9 @@ const Content = () => {
 
 	return (
 		<>
+			<Helmet>
+				<title>Upload File</title>
+			</Helmet>
 			<div className="row">
 				<div className="col-md-6">
 					<div className="form-group">

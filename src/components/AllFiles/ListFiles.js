@@ -8,6 +8,8 @@ import { db } from "../../config/firbase";
 
 import Card from "../Card/Card.js";
 
+import { Helmet } from "react-helmet";
+
 const ListFiles = (props) => {
 	const user = useSelector(selectLogin);
 
@@ -39,6 +41,9 @@ const ListFiles = (props) => {
 
 	return (
 		<div>
+			<Helmet>
+				<title>All Files</title>
+			</Helmet>
 			{loading ? (
 				"Loading"
 			) : (

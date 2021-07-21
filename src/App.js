@@ -21,6 +21,8 @@ import Content from "./components/Content/Content";
 
 import ListFiles from "./components/AllFiles/ListFiles";
 
+import { Helmet } from "react-helmet";
+
 import "./App.css";
 
 const App = () => {
@@ -93,7 +95,12 @@ const App = () => {
 					) : (
 						<Switch>
 							<Route path="/">
-								<h2>Logged Out</h2>
+								<>
+									<Helmet>
+										<title>Home</title>
+									</Helmet>
+									<h2>Logged Out</h2>
+								</>
 							</Route>
 						</Switch>
 					)}
