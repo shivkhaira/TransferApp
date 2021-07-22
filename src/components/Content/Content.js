@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSelector } from "react-redux";
 
 import { selectUser } from "../../features/user/userSlice";
 
 import { fileUpload } from "../../config/storeData";
-
-import { Helmet } from "react-helmet";
 
 import "./Content.css";
 
@@ -25,6 +23,10 @@ const Content = () => {
 		setProgress(val);
 	};
 
+	useEffect(() => {
+		document.title = "Upload File";
+	}, []);
+
 	const upload = async () => {
 		setProgress(0);
 		setUpload("Uploading");
@@ -39,9 +41,6 @@ const Content = () => {
 
 	return (
 		<>
-			<Helmet>
-				<title>Upload File</title>
-			</Helmet>
 			<div className="row">
 				<div className="col-md-6">
 					<div className="form-group">

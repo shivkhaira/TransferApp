@@ -8,7 +8,7 @@ import { db } from "../../config/firbase";
 
 import Card from "../Card/Card.js";
 
-import { Helmet } from "react-helmet";
+import "./ListFiles.css";
 
 const ListFiles = (props) => {
 	const user = useSelector(selectLogin);
@@ -17,21 +17,31 @@ const ListFiles = (props) => {
 
 	const [files, setFiles] = useState([]);
 
+	const [search, setSearch] = useState("");
+
+	const filterd = files.filter((m) =>
+		m.caption.toLowerCase().includes(search.toLowerCase())
+	);
+
 	useEffect(() => {
+		document.title = "All Files";
 		if (user.isLoggedin) {
-			var list = db.collection(user.user.uid).onSnapshot(
-				(snapshot) => {
-					var cities = [];
-					snapshot.forEach((doc) => {
-						cities.push({ id: doc.id, ...doc.data() });
-					});
-					setFiles(cities);
-					setLoading(false);
-				},
-				(error) => {
-					console.log(error);
-				}
-			);
+			var list = db
+				.collection(user.user.uid)
+				.orderBy("created_at", "desc")
+				.onSnapshot(
+					(snapshot) => {
+						var cities = [];
+						snapshot.forEach((doc) => {
+							cities.push({ id: doc.id, ...doc.data() });
+						});
+						setFiles(cities);
+						setLoading(false);
+					},
+					(error) => {
+						console.log(error);
+					}
+				);
 		}
 
 		return () => {
@@ -40,15 +50,20 @@ const ListFiles = (props) => {
 	}, [user]);
 
 	return (
-		<div>
-			<Helmet>
-				<title>All Files</title>
-			</Helmet>
+		<div className="col-md-6 mb">
 			{loading ? (
 				"Loading"
 			) : (
 				<>
-					{files.map((f) => {
+					<div className="form-group">
+						<input
+							className="form-control"
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+						/>
+					</div>
+					<br />
+					{filterd.map((f) => {
 						return <Card key={f.name} {...f} uid={user.user.uid} />;
 					})}
 				</>
